@@ -1,0 +1,200 @@
+---
+- name: Deploy Updated "Programming Jokes" Website with 20 More Jokes for server 3
+  hosts: all
+  become: yes
+  tasks:
+
+    - name: Install Apache Web Server
+      package:
+        name: apache2
+        state: present
+
+    - name: Ensure Apache is running
+      service:
+        name: apache2
+        state: started
+        enabled: yes
+
+    - name: Create website directories
+      file:
+        path: "/var/www/html/{{ item }}"
+        state: directory
+        mode: '0755'
+      loop:
+        - website3
+
+    # New Design for Website 3: Programming Jokes with 20 More Jokes
+    - name: Deploy Website 3 - "Programming Jokes" (Updated with 20 More Jokes) for server 3
+      copy:
+        content: |
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <title>Programming Jokes - Website 3</title>
+              <style>
+                  body {
+                      font-family: 'Arial', sans-serif;
+                      background-color: #f39c12; /* Yellow background */
+                      color: #2c3e50;
+                      margin: 0;
+                      padding: 0;
+                      text-align: center;
+                  }
+                  header {
+                      background-color: #e74c3c; /* Red */
+                      color: white;
+                      padding: 50px 0;
+                  }
+                  h1 {
+                      font-size: 3em;
+                      margin: 0;
+                  }
+                  h2 {
+                      font-size: 1.5em;
+                      color: #ecf0f1;
+                  }
+                  .joke-container {
+                      display: grid;
+                      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                      gap: 20px;
+                      padding: 20px;
+                  }
+                  .joke-card {
+                      background-color: #2c3e50;
+                      color: #ecf0f1;
+                      padding: 20px;
+                      border-radius: 10px;
+                      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                      transition: transform 0.3s ease, box-shadow 0.3s ease;
+                  }
+                  .joke-card:hover {
+                      transform: translateY(-10px);
+                      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+                  }
+                  .joke-card h3 {
+                      margin-top: 0;
+                      font-size: 1.4em;
+                      color: #f1c40f;
+                  }
+                  .joke-card p {
+                      font-size: 1.1em;
+                      line-height: 1.6;
+                  }
+                  .get-joke-btn {
+                      padding: 10px 20px;
+                      background-color: #f39c12;
+                      color: #2c3e50;
+                      border: none;
+                      font-size: 1.2em;
+                      cursor: pointer;
+                      border-radius: 5px;
+                      margin-top: 20px;
+                      transition: background-color 0.3s;
+                  }
+                  .get-joke-btn:hover {
+                      background-color: #e67e22;
+                  }
+                  footer {
+                      background-color: #e74c3c;
+                      color: white;
+                      padding: 20px;
+                      margin-top: 30px;
+                  }
+              </style>
+          </head>
+          <body>
+              <header>
+                  <h1>Programming Jokes</h1>
+                  <h2>Laugh your bugs away with these jokes!</h2>
+              </header>
+              <div class="joke-container">
+                  <!-- Jokes Section -->
+                  <div class="joke-card">
+                      <h3>Why do programmers prefer dark mode?</h3>
+                      <p>Because the light attracts bugs!</p>
+                  </div>
+                  <div class="joke-card">
+                      <h3>How many programmers does it take to change a light bulb?</h3>
+                      <p>None, that's a hardware problem!</p>
+                  </div>
+                  <div class="joke-card">
+                      <h3>Why do Java developers wear glasses?</h3>
+                      <p>Because they can’t C#!</p>
+                  </div>
+                  <div class="joke-card">
+                      <h3>What’s the object-oriented way to become wealthy?</h3>
+                      <p>Inheritance!</p>
+                  </div>
+                  <div class="joke-card">
+                      <h3>Why did the developer go broke?</h3>
+                      <p>Because he used up all his cache!</p>
+                  </div>
+                  <div class="joke-card">
+                      <h3>Why can't programmers tell the difference between Christmas and Halloween?</h3>
+                      <p>Because Oct 31 == Dec 25!</p>
+                  </div>
+                  <div class="joke-card">
+                      <h3>How do you comfort a JavaScript bug?</h3>
+                      <p>You console it!</p>
+                  </div>
+                  <div class="joke-card">
+                      <h3>What do you call a programmer from Finland?</h3>
+                      <p>Nerdic!</p>
+                  </div>
+                  <div class="joke-card">
+                      <h3>Why don’t programmers like nature?</h3>
+                      <p>It has too many bugs!</p>
+                  </div>
+                  <div class="joke-card">
+                      <h3>What’s a programmer’s favorite hangout place?</h3>
+                      <p>The Foo Bar!</p>
+                  </div>
+                  <div class="joke-card">
+                      <h3>What do you call a function that doesn't return?</h3>
+                      <p>A void function!</p>
+                  </div>
+                  <div class="joke-card">
+                      <h3>Why did the coder break up with the HTML?</h3>
+                      <p>Because it didn’t know how to close!</p>
+                  </div>
+                  <div class="joke-card">
+                      <h3>What’s a developer’s favorite type of coffee?</h3>
+                      <p>Java!</p>
+                  </div>
+                  <div class="joke-card">
+                      <h3>Why don’t programmers like to play hide and seek?</h3>
+                      <p>Because good luck hiding when the debugger finds you!</p>
+                  </div>
+                  <div class="joke-card">
+                      <h3>What do you call 8 hobbits?</h3>
+                      <p>A hobbyte!</p>
+                  </div>
+                  <div class="joke-card">
+                      <h3>Why was the JavaScript developer so sad?</h3>
+                      <p>Because he didn’t know how to 'null' his feelings.</p>
+                  </div>
+                  <div class="joke-card">
+                      <h3>What is a developer's favorite band?</h3>
+                      <p>The Rolling Stones, because they use Git!</p>
+                  </div>
+                  <div class="joke-card">
+                      <h3>What do you call a class without inheritance?</h3>
+                      <p>A lonely class!</p>
+                  </div>
+                  <div class="joke-card">
+                      <h3>How does a developer fix a broken keyboard?</h3>
+                      <p>By using the "Escape" key!</p>
+                  </div>
+              </div>
+              <button class="get-joke-btn" onclick="alert('Here comes a new joke!');">Get a New Joke</button>
+              <footer>
+                  <p>Stay Bug-Free!</p>
+              </footer>
+          </body>
+          </html>
+        dest: "/var/www/html/website3/index.html"
+        mode: '0644'
+      when: inventory_hostname == "ubuntu@192.168.100.13"
+

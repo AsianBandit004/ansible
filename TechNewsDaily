@@ -1,0 +1,132 @@
+---
+- name: Deploy Updated "Tech News" Website with Modern Layout for server 1
+  hosts: all
+  become: yes
+  tasks:
+
+    - name: Install Apache Web Server
+      package:
+        name: apache2
+        state: present
+
+    - name: Ensure Apache is running
+      service:
+        name: apache2
+        state: started
+        enabled: yes
+
+    - name: Create website directories
+      file:
+        path: "/var/www/html/{{ item }}"
+        state: directory
+        mode: '0755'
+      loop:
+        - website1
+
+    # New Design for Website 1: Tech News (Updated Layout)
+    - name: Deploy Website 1 - "Tech News" (Updated Layout) for server 1
+      copy:
+        content: |
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <title>Tech News - Website 1</title>
+              <style>
+                  body {
+                      font-family: 'Arial', sans-serif;
+                      background: #2c3e50; /* Dark blue/gray */
+                      color: #ecf0f1;
+                      margin: 0;
+                      padding: 0;
+                  }
+                  header {
+                      background: #1abc9c;
+                      color: white;
+                      text-align: center;
+                      padding: 50px 0;
+                  }
+                  h1 {
+                      font-size: 3em;
+                  }
+                  h2 {
+                      font-size: 1.8em;
+                      color: #3498db;
+                  }
+                  .main-content {
+                      display: grid;
+                      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+                      gap: 30px;
+                      padding: 30px;
+                  }
+                  .news-card {
+                      background: #34495e;
+                      padding: 20px;
+                      border-radius: 10px;
+                      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                      transition: transform 0.3s ease, box-shadow 0.3s ease;
+                  }
+                  .news-card:hover {
+                      transform: translateY(-10px);
+                      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+                  }
+                  .news-card h3 {
+                      margin-top: 0;
+                      font-size: 1.6em;
+                      color: #ecf0f1;
+                  }
+                  .news-card p {
+                      font-size: 1.1em;
+                      line-height: 1.6;
+                  }
+                  .news-card .icon {
+                      font-size: 30px;
+                      color: #3498db;
+                      margin-right: 15px;
+                  }
+                  footer {
+                      background: #1abc9c;
+                      color: white;
+                      text-align: center;
+                      padding: 20px;
+                      margin-top: 50px;
+                  }
+              </style>
+          </head>
+          <body>
+              <header>
+                  <h1>Tech News Daily</h1>
+                  <p>Stay updated with the latest in technology</p>
+              </header>
+              <div class="main-content">
+                  <div class="news-card">
+                      <div class="icon">💻</div>
+                      <h3>AI Breakthroughs Revolutionizing Tech</h3>
+                      <p>The AI space has been evolving rapidly, with new breakthroughs every day. Here’s a roundup of the latest trends...</p>
+                  </div>
+                  <div class="news-card">
+                      <div class="icon">☁️</div>
+                      <h3>Cloud Computing: The Future of IT</h3>
+                      <p>Cloud computing is transforming the IT landscape. From scalability to cost-effectiveness, cloud adoption is on the rise...</p>
+                  </div>
+                  <div class="news-card">
+                      <div class="icon">🖥️</div>
+                      <h3>The Rise of Quantum Computing</h3>
+                      <p>Quantum computing promises to revolutionize industries by solving problems traditional computers can't...</p>
+                  </div>
+                  <div class="news-card">
+                      <div class="icon">🔐</div>
+                      <h3>Cybersecurity in 2024: What You Need to Know</h3>
+                      <p>As we move into 2024, cybersecurity remains one of the top concerns for businesses and individuals alike...</p>
+                  </div>
+              </div>
+              <footer>
+                  <p>Tech News Daily | All Rights Reserved</p>
+              </footer>
+          </body>
+          </html>
+        dest: "/var/www/html/website1/index.html"
+        mode: '0644'
+      when: inventory_hostname == "ubuntu@192.168.100.11"
+
