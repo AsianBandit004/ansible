@@ -9,6 +9,7 @@ I am excited to share with you little snips of code and things I am currently wo
 # Program Jokes
 # Tech News Daily
 # Cyber Security tips
+CyberSecurityTips
 
 These are all static HTML websites I made using a combo of warp cli, chatgpt, and creativity! Please feel free to copy and paste this into a text file and use; **ansible-playbook <filename> -K** command to deploy. This assumes you already have a client and server built out with SSH capability for deploying.
 
