@@ -1,0 +1,279 @@
+---
+- name: Deploy Different Themed and Structured Websites to 3 Web Servers
+  hosts: all
+  become: yes
+  tasks:
+
+    - name: Install Apache Web Server
+      package:
+        name: apache2
+        state: present
+
+    - name: Ensure Apache is running
+      service:
+        name: apache2
+        state: started
+        enabled: yes
+
+    - name: Create website directories
+      file:
+        path: "/var/www/html/{{ item }}"
+        state: directory
+        mode: '0755'
+      loop:
+        - website1
+        - website2
+        - website3
+
+    # Website 1: Tech News with Dark Futuristic Theme
+    - name: Deploy Website 1 - "Tech News" (Dark Theme) for server 1
+      copy:
+        content: |
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <title>Tech News - Website 1</title>
+              <style>
+                  body {
+                      font-family: 'Arial', sans-serif;
+                      background: #2c3e50; /* Dark Blue/Gray */
+                      color: #ecf0f1;
+                      margin: 0;
+                      padding: 0;
+                  }
+                  header {
+                      background: #1abc9c;
+                      color: white;
+                      text-align: center;
+                      padding: 40px 0;
+                  }
+                  h1 {
+                      font-size: 3em;
+                      margin: 0;
+                  }
+                  .content {
+                      padding: 30px;
+                      display: flex;
+                      flex-wrap: wrap;
+                      justify-content: space-around;
+                  }
+                  .article {
+                      background: #34495e;
+                      border-radius: 10px;
+                      padding: 20px;
+                      margin: 15px;
+                      width: 45%;
+                      transition: transform 0.3s;
+                  }
+                  .article:hover {
+                      transform: scale(1.05);
+                  }
+                  footer {
+                      background: #1abc9c;
+                      color: white;
+                      text-align: center;
+                      padding: 10px 0;
+                      margin-top: 30px;
+                  }
+              </style>
+          </head>
+          <body>
+              <header>
+                  <h1>Tech News Daily</h1>
+                  <p>Latest tech updates and trends</p>
+              </header>
+              <div class="content">
+                  <div class="article">
+                      <h2>New AI Breakthrough</h2>
+                      <p>Discover how AI is changing the future of technology...</p>
+                  </div>
+                  <div class="article">
+                      <h2>Cybersecurity Trends</h2>
+                      <p>Learn about the latest advancements in cybersecurity...</p>
+                  </div>
+              </div>
+              <footer>
+                  <p>Stay Updated. Stay Secure.</p>
+              </footer>
+          </body>
+          </html>
+        dest: "/var/www/html/website1/index.html"
+        mode: '0644'
+      when: inventory_hostname == "ubuntu@192.168.100.11"
+
+    # Website 2: Cybersecurity Tips with Light Theme & Sidebar
+    - name: Deploy Website 2 - "Cybersecurity Tips" (Light Theme) for server 2
+      copy:
+        content: |
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <title>Cybersecurity Tips - Website 2</title>
+              <style>
+                  body {
+                      font-family: 'Arial', sans-serif;
+                      background-color: #f4f6f7;
+                      color: #333;
+                      display: flex;
+                      margin: 0;
+                  }
+                  header {
+                      background-color: #27ae60;
+                      color: white;
+                      padding: 20px;
+                      text-align: center;
+                      width: 100%;
+                  }
+                  h1 {
+                      font-size: 2.5em;
+                  }
+                  .main-content {
+                      display: flex;
+                      justify-content: space-between;
+                      width: 100%;
+                      padding: 30px;
+                  }
+                  .sidebar {
+                      background-color: #2ecc71;
+                      width: 30%;
+                      padding: 15px;
+                      border-radius: 8px;
+                      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                  }
+                  .content {
+                      width: 65%;
+                      padding: 15px;
+                  }
+                  footer {
+                      background-color: #27ae60;
+                      color: white;
+                      text-align: center;
+                      padding: 10px;
+                      width: 100%;
+                  }
+              </style>
+          </head>
+          <body>
+              <header>
+                  <h1>Cybersecurity Tips</h1>
+              </header>
+              <div class="main-content">
+                  <div class="sidebar">
+                      <h3>Quick Tips</h3>
+                      <ul>
+                          <li>Enable Two-Factor Authentication</li>
+                          <li>Use Strong Passwords</li>
+                          <li>Keep Software Up-to-date</li>
+                      </ul>
+                  </div>
+                  <div class="content">
+                      <h2>How to Protect Yourself Online</h2>
+                      <p>Learn the essential practices to keep your data safe...</p>
+                  </div>
+              </div>
+              <footer>
+                  <p>Secure your Future. Stay Safe Online!</p>
+              </footer>
+          </body>
+          </html>
+        dest: "/var/www/html/website2/index.html"
+        mode: '0644'
+      when: inventory_hostname == "ubuntu@192.168.100.12"
+
+    # Website 3: Programming Jokes with Bright Fun Theme
+    - name: Deploy Website 3 - "Programming Jokes" (Bright Fun Theme) for server 3
+      copy:
+        content: |
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <title>Programming Jokes - Website 3</title>
+              <style>
+                  body {
+                      font-family: 'Courier New', Courier, monospace;
+                      background-color: #ffeb3b; /* Bright Yellow */
+                      color: #333;
+                      display: flex;
+                      flex-direction: column;
+                      align-items: center;
+                      padding: 50px;
+                  }
+                  header {
+                      background-color: #f44336;
+                      color: white;
+                      padding: 20px;
+                      width: 100%;
+                      text-align: center;
+                  }
+                  h1 {
+                      font-size: 3em;
+                  }
+                  .joke-container {
+                      background-color: #f44336;
+                      color: white;
+                      border-radius: 10px;
+                      padding: 20px;
+                      width: 70%;
+                      margin-top: 20px;
+                      text-align: center;
+                  }
+                  button {
+                      background-color: #2196f3;
+                      color: white;
+                      border: none;
+                      padding: 10px 20px;
+                      font-size: 18px;
+                      cursor: pointer;
+                      border-radius: 5px;
+                      margin-top: 20px;
+                  }
+                  button:hover {
+                      background-color: #1976d2;
+                  }
+                  footer {
+                      background-color: #f44336;
+                      color: white;
+                      text-align: center;
+                      padding: 10px;
+                      margin-top: 30px;
+                      width: 100%;
+                  }
+              </style>
+          </head>
+          <body>
+              <header>
+                  <h1>Programming Jokes</h1>
+                  <p>Laugh your code away!</p>
+              </header>
+              <div class="joke-container">
+                  <p id="joke-text">Why do programmers prefer dark mode?</p>
+                  <button onclick="newJoke()">Get a New Joke</button>
+              </div>
+              <footer>
+                  <p>Code, Laugh, Repeat!</p>
+              </footer>
+              <script>
+                  const jokes = [
+                      "Why do programmers prefer dark mode? Because the light attracts bugs!",
+                      "Why do Java developers wear glasses? Because they can't C#.",
+                      "Why did the developer go broke? Because he used up all his cache.",
+                      "Knock knock. Who’s there? A programmer. A programmer who? A programmer who knows how to answer a knock knock joke."
+                  ];
+
+                  function newJoke() {
+                      const randomJoke = jokes[Math.floor(Math.random() * jokes.length)];
+                      document.getElementById('joke-text').textContent = randomJoke;
+                  }
+              </script>
+          </body>
+          </html>
+        dest: "/var/www/html/website3/index.html"
+        mode: '0644'
+      when: inventory_hostname == "ubuntu@192.168.100.13"
+
