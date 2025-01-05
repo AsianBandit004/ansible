@@ -20,6 +20,9 @@ Is a small playbook that checks your Ansible servers for any updates and if so u
 
 Is also a small script that checks for the apache2 webserver and if not installed will let you know
 
+# Terraform
+
+I was watching LearnLinuxTV and he had a really nice script to deploy and automate VM creation with Terraform. I added my own information and was able to spin up a VM in Proxmox with no manual intervention. That is after the template file is created, if you do not have a template file then you will need to do that first before trying Terraform script.
 
 ----------------------------------------------------------------------------------------------------------------------------
 Please feel free to use any of these scripts at your leisure and please give me feedback on improvements and recommendations 
