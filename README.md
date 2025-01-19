@@ -6,7 +6,10 @@ I am excited to share with you little snips of code and things I am currently wo
 
 
 
-# Program Jokes (Insert Screencap)
+# Program Jokes 
+<img width="630" alt="Screenshot 2025-01-19 at 7 46 58 AM" src="https://github.com/user-attachments/assets/b7ee28f3-3b60-4b08-9743-a807ebea5130" />
+
+
 # Tech News Daily
 # Cyber Security tips
 
